@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   Box, 
   Container, 
@@ -21,7 +22,6 @@ import {
   Avatar,
   Rating
 } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
@@ -437,7 +437,14 @@ const Home = () => {
                             icon={<AccessTimeIcon />}
                             sx={{
                               backdropFilter: 'blur(10px)',
-                              backgroundColor: 'rgba(255,255,255,0.9)',
+                              backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                              color: theme.palette.primary.main,
+                              fontWeight: 600,
+                              '& .MuiChip-icon': {
+                                color: theme.palette.primary.main,
+                              },
+                              border: `1px solid ${theme.palette.primary.main}`,
+                              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
                             }}
                           />
                         </Box>
@@ -495,17 +502,23 @@ const Home = () => {
                                 per person
                               </Typography>
                             </Box>
-                            <IconButton
+                            <Button
+                              variant="contained"
                               color="primary"
+                              endIcon={<ArrowForwardIcon />}
                               sx={{
-                                bgcolor: theme.palette.primary.main,
+                                textTransform: 'none',
+                                fontWeight: 600,
+                                px: 2,
+                                py: 1,
+                                borderRadius: 2,
                                 '&:hover': {
-                                  bgcolor: theme.palette.primary.main,
+                                  bgcolor: theme.palette.primary.dark,
                                 },
                               }}
                             >
-                              <ArrowForwardIcon />
-                            </IconButton>
+                              Details
+                            </Button>
                           </Box>
                         </Stack>
                       </CardContent>
@@ -515,6 +528,42 @@ const Home = () => {
               ))}
             </Grid>
           </motion.div>
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 6 }}>
+            <Button
+              component={Link}
+              to="/packages"
+              variant="contained"
+              size="large"
+              sx={{
+                px: 4,
+                py: 1.5,
+                borderRadius: 3,
+                textTransform: 'none',
+                fontSize: '1.1rem',
+                fontWeight: 600,
+                background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
+                color: 'white',
+                '&:hover': {
+                  background: 'linear-gradient(45deg, #21CBF3 30%, #2196F3 90%)',
+                  boxShadow: '0 4px 10px 2px rgba(33, 203, 243, .4)',
+                  transform: 'translateY(-2px)',
+                  transition: 'all 0.3s ease-in-out',
+                },
+              }}
+              endIcon={
+                <ArrowForwardIcon sx={{ 
+                  ml: 1,
+                  transition: 'transform 0.3s ease-in-out',
+                  '.MuiButton-root:hover &': {
+                    transform: 'translateX(4px)',
+                  }
+                }} />
+              }
+            >
+              View All Packages
+            </Button>
+          </Box>
         </Container>
       </Box>
 
@@ -1108,6 +1157,82 @@ const Home = () => {
         </Container>
       </Box>
 
+      {/* Contact Section */}
+      <Box 
+        sx={{ 
+          py: 12, 
+          mb: 8,
+          background: 'linear-gradient(45deg, rgba(33, 150, 243, 0.1), rgba(33, 203, 243, 0.1))',
+          borderRadius: { xs: 0, md: '0 0 40px 40px' }
+        }}
+      >
+        <Container maxWidth="md">
+          <motion.div
+            variants={containerAnimation}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            <Stack spacing={4} alignItems="center" textAlign="center">
+              <Typography
+                variant="h3"
+                component="h2"
+                sx={{
+                  fontWeight: 700,
+                  mb: 2,
+                  background: 'linear-gradient(45deg, #2196F3, #21CBF3)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                Ready to Start Your Journey?
+              </Typography>
+              <Typography
+                variant="h6"
+                color="text.secondary"
+                sx={{ maxWidth: 600, mb: 4 }}
+              >
+                Let us help you plan your perfect Vizag adventure. Contact us now and get started!
+              </Typography>
+              <Button
+                component={Link}
+                to="/contact"
+                variant="contained"
+                size="large"
+                sx={{
+                  px: 6,
+                  py: 2,
+                  borderRadius: 3,
+                  textTransform: 'none',
+                  fontSize: '1.2rem',
+                  fontWeight: 600,
+                  background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                  boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
+                  color: 'white',
+                  '&:hover': {
+                    background: 'linear-gradient(45deg, #21CBF3 30%, #2196F3 90%)',
+                    boxShadow: '0 4px 10px 2px rgba(33, 203, 243, .4)',
+                    transform: 'translateY(-2px)',
+                    transition: 'all 0.3s ease-in-out',
+                  },
+                }}
+                endIcon={
+                  <ArrowForwardIcon sx={{ 
+                    ml: 1,
+                    transition: 'transform 0.3s ease-in-out',
+                    '.MuiButton-root:hover &': {
+                      transform: 'translateX(4px)',
+                    }
+                  }} />
+                }
+              >
+                Contact Us
+              </Button>
+            </Stack>
+          </motion.div>
+        </Container>
+      </Box>
+
       <Snackbar
         open={openSnackbar}
         autoHideDuration={6000}
@@ -1123,30 +1248,6 @@ const Home = () => {
           {snackbarMessage}
         </Alert>
       </Snackbar>
-
-      {/* Call to Action */}
-      <Box sx={{ textAlign: 'center', mt: 8 }}>
-        <Typography variant="h3" component="h2" sx={{ mb: 3, fontWeight: 700 }}>
-          Ready to Start Your Journey?
-        </Typography>
-        <Typography variant="h6" color="text.secondary" sx={{ mb: 4 }}>
-          Let us help you plan your perfect Vizag adventure. Contact us now and get started!
-        </Typography>
-        <Button
-          variant="contained"
-          size="large"
-          component={Link}
-          to="/contact"
-          sx={{
-            px: 6,
-            py: 2,
-            borderRadius: 50,
-            fontSize: '1.1rem'
-          }}
-        >
-          Contact Us
-        </Button>
-      </Box>
     </Box>
   );
 };
