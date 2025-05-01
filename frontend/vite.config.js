@@ -7,13 +7,18 @@ export default defineConfig({
   base: '/',
   build: {
     outDir: 'dist',
-    sourcemap: true,
+    sourcemap: false, // Changed to false for production
+    assetsDir: 'assets',
     rollupOptions: {
       output: {
         manualChunks: {
           'react-vendor': ['react', 'react-dom'],
           'mui-vendor': ['@mui/material', '@mui/icons-material'],
         },
+        // Ensure clean asset paths
+        assetFileNames: 'assets/[name].[hash].[ext]',
+        chunkFileNames: 'assets/[name].[hash].js',
+        entryFileNames: 'assets/[name].[hash].js',
       },
     },
   },
